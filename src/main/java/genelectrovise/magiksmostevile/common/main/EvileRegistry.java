@@ -1,7 +1,5 @@
 package genelectrovise.magiksmostevile.common.main;
 
-import java.util.function.Supplier;
-
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.AmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.OverPoweredAmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.PoweredAmethystArmorBase;
@@ -17,7 +15,6 @@ import genelectrovise.magiksmostevile.common.main.support.EvileItemGroup;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeature;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeatureConfig;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -32,9 +29,9 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.WrittenBookItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
@@ -188,5 +185,6 @@ public class EvileRegistry {
 		Main.LOGGER.debug("Log Key 182727012020 : FMLJavaModLoadingContext = " + FMLJavaModLoadingContext.get());
 		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		ORE_GEN.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 }
