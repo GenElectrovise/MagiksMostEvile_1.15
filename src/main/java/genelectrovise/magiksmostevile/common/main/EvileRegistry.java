@@ -1,5 +1,7 @@
 package genelectrovise.magiksmostevile.common.main;
 
+import java.util.function.Supplier;
+
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.AmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.OverPoweredAmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.PoweredAmethystArmorBase;
@@ -12,9 +14,10 @@ import genelectrovise.magiksmostevile.common.item.glowing.GlowingSword;
 import genelectrovise.magiksmostevile.common.main.support.EnumEvileArmorMaterial;
 import genelectrovise.magiksmostevile.common.main.support.EnumEvileItemTier;
 import genelectrovise.magiksmostevile.common.main.support.EvileItemGroup;
-import genelectrovise.magiksmostevile.common.world.gen.EvileOreFeature;
-import genelectrovise.magiksmostevile.common.world.gen.EvileOreFeatureConfig;
+import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeature;
+import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeatureConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -176,7 +179,7 @@ public class EvileRegistry {
 
 //=========GENERATION==================================================================================================================
 	public static final RegistryObject<EvileOreFeature> AMETHYST_ORE_OVERWORLD_GEN = ORE_GEN
-			.register("amethyst_ore_overworld_gen", () -> new EvileOreFeature(EvileOreFeatureConfig::deserialize));//(EvileOreFeatureConfig::deserialize));
+			.register("amethyst_ore_overworld_gen", () -> new EvileOreFeature(EvileOreFeatureConfig::deserialize));
 
 //=========CONSTRUCTOR=================================================================================================================
 
