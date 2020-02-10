@@ -14,6 +14,7 @@ import genelectrovise.magiksmostevile.common.main.support.EnumEvileItemTier;
 import genelectrovise.magiksmostevile.common.main.support.EvileItemGroup;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeature;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeatureConfig;
+import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,10 +30,9 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.WrittenBookItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.biome.TheEndBiome;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -42,7 +42,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EvileRegistry {
 	private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Main.MODID);
 	private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Main.MODID);
-	private static final DeferredRegister<Feature<?>> ORE_GEN = new DeferredRegister<>(ForgeRegistries.FEATURES,
+	private static final DeferredRegister<Feature<?>> FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES,
 			Main.MODID);
 
 	// =========BLOCKS======================================================================================================================
@@ -175,8 +175,15 @@ public class EvileRegistry {
 					.group(EvileItemGroup.ITEMGROUP_EVILE)));
 
 //=========GENERATION==================================================================================================================
-	public static final RegistryObject<EvileOreFeature> AMETHYST_ORE_OVERWORLD_GEN = ORE_GEN
+
+	public static final RegistryObject<EvileOreFeature> AMETHYST_ORE_OVERWORLD_GEN = FEATURES
 			.register("amethyst_ore_overworld_gen", () -> new EvileOreFeature(EvileOreFeatureConfig::deserialize));
+
+	public static void addOres() {
+		EvileOreGeneration.addOverworldOres();
+		EvileOreGeneration.addEndOres();
+		EvileOreGeneration.addNetherOres();
+	}
 
 //=========CONSTRUCTOR=================================================================================================================
 
@@ -185,6 +192,5 @@ public class EvileRegistry {
 		Main.LOGGER.debug("Log Key 182727012020 : FMLJavaModLoadingContext = " + FMLJavaModLoadingContext.get());
 		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		ORE_GEN.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 }
