@@ -1,6 +1,6 @@
 package genelectrovise.magiksmostevile.common.world.gen.ore;
 
-import genelectrovise.magiksmostevile.common.main.EvileRegistry;
+import genelectrovise.magiksmostevile.common.main.registry.EvileDeferredRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.world.biome.Biome;
@@ -19,19 +19,19 @@ public class EvileOreGeneration {
 			biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
 					Feature.ORE
 							.func_225566_b_(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE,
-									EvileRegistry.AMETHYST_ORE_OVERWORLD.get().getDefaultState(), 7))
+									EvileDeferredRegistry.AMETHYST_ORE_OVERWORLD.get().getDefaultState(), 7))
 							.func_227228_a_(
 									Placement.COUNT_DEPTH_AVERAGE.func_227446_a_(new DepthAverageConfig(1, 100, 25))));
 
 		}
 	}
 
-	public static void addEndOres() {
+	public static void addNetherOres() {
 		for (Biome biome : ForgeRegistries.BIOMES) {
 			if (biome == Biomes.NETHER) {
 				biome.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.ORE
 						.func_225566_b_(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK,
-								EvileRegistry.AMETHYST_ORE_NETHER.get().getDefaultState(), 7))
+								EvileDeferredRegistry.AMETHYST_ORE_NETHER.get().getDefaultState(), 7))
 						.func_227228_a_(
 								Placement.COUNT_DEPTH_AVERAGE.func_227446_a_(new DepthAverageConfig(1, 100, 25))));
 
@@ -39,7 +39,8 @@ public class EvileOreGeneration {
 		}
 	}
 
-	public static void addNetherOres() {
+	/*
+	public static void addEndOres() {
 		for (Biome biome : ForgeRegistries.BIOMES) {
 			if (biome == Biomes.END_BARRENS || biome == Biomes.END_HIGHLANDS || biome == Biomes.END_MIDLANDS
 					|| biome == Biomes.SMALL_END_ISLANDS || biome == Biomes.THE_END || biome == Biomes.THE_VOID) {
@@ -52,4 +53,5 @@ public class EvileOreGeneration {
 			}
 		}
 	}
+	*/
 }

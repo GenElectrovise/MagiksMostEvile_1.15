@@ -1,5 +1,9 @@
-package genelectrovise.magiksmostevile.common.main;
+package genelectrovise.magiksmostevile.common.main.registry;
 
+import java.util.function.Supplier;
+
+import genelectrovise.magiksmostevile.common.entity.vampire_bat.VampireBat;
+import genelectrovise.magiksmostevile.common.entity.vampire_bat.VampireBatEgg;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.AmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.OverPoweredAmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.PoweredAmethystArmorBase;
@@ -9,15 +13,21 @@ import genelectrovise.magiksmostevile.common.item.glowing.GlowingItem;
 import genelectrovise.magiksmostevile.common.item.glowing.GlowingPickaxe;
 import genelectrovise.magiksmostevile.common.item.glowing.GlowingShovel;
 import genelectrovise.magiksmostevile.common.item.glowing.GlowingSword;
+import genelectrovise.magiksmostevile.common.main.Main;
 import genelectrovise.magiksmostevile.common.main.support.EnumEvileArmorMaterial;
 import genelectrovise.magiksmostevile.common.main.support.EnumEvileItemTier;
 import genelectrovise.magiksmostevile.common.main.support.EvileItemGroup;
+import genelectrovise.magiksmostevile.common.tileentity.amethyst_crystal.AmethystCrystalBlock;
+import genelectrovise.magiksmostevile.common.tileentity.amethyst_crystal.AmethystCrystalTileEntity;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeature;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeatureConfig;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EntityType.IFactory;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
@@ -30,19 +40,24 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.WrittenBookItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.world.biome.TheEndBiome;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class EvileRegistry {
+public class EvileDeferredRegistry {
+	// https://github.com/McJty/YouTubeModding14/blob/master/src/main/java/com/mcjty/mytutorial/setup/Registration.java
+
 	private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Main.MODID);
 	private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Main.MODID);
 	private static final DeferredRegister<Feature<?>> FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES,
+			Main.MODID);
+	private static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<TileEntityType<?>>(
+			ForgeRegistries.TILE_ENTITIES, Main.MODID);
+	private static final DeferredRegister<EntityType<?>> ENTITIES = new DeferredRegister<>(ForgeRegistries.ENTITIES,
 			Main.MODID);
 
 	// =========BLOCKS======================================================================================================================
@@ -58,6 +73,9 @@ public class EvileRegistry {
 	public static final RegistryObject<Block> AMETHYST_ORE_END = BLOCKS.register("amethyst_ore_end",
 			() -> new Block(Block.Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).sound(SoundType.CORAL)
 					.hardnessAndResistance(5F, 5F)));
+	public static final RegistryObject<Block> AMETHYST_CRYSTAL = BLOCKS.register("amethyst_crystal",
+			() -> new AmethystCrystalBlock(Block.Properties.create(Material.GLASS).harvestTool(ToolType.PICKAXE)
+					.sound(SoundType.GLASS).hardnessAndResistance(2F, 10F)));
 
 //=========BLOCK_ITEMS=================================================================================================================
 	public static final RegistryObject<Item> AMETHYST_BLOCK_ITEM = ITEMS.register("amethyst_block",
@@ -70,6 +88,8 @@ public class EvileRegistry {
 					new Item.Properties().group(EvileItemGroup.ITEMGROUP_EVILE)));
 	public static final RegistryObject<Item> AMETHYST_ORE_END_ITEM = ITEMS.register("amethyst_ore_end",
 			() -> new BlockItem(AMETHYST_ORE_END.get(), new Item.Properties().group(EvileItemGroup.ITEMGROUP_EVILE)));
+	public static final RegistryObject<Item> AMETHYST_CRYSTAL_ITEM = ITEMS.register("amethyst_crystal",
+			() -> new BlockItem(AMETHYST_CRYSTAL.get(), new Item.Properties().group(EvileItemGroup.ITEMGROUP_EVILE)));
 
 //=========ITEMS=======================================================================================================================
 	public static final RegistryObject<Item> AMETHYST = ITEMS.register("amethyst",
@@ -174,6 +194,15 @@ public class EvileRegistry {
 							.effect(new EffectInstance(Effects.SPEED, 400, 1), 1.0F).fastToEat().build())
 					.group(EvileItemGroup.ITEMGROUP_EVILE)));
 
+//=========TILE ENTITIES===============================================================================================================
+	public static final RegistryObject<TileEntityType<AmethystCrystalTileEntity>> TILE_ENTITY_AMETHYST_CRYSTAL = TILE_ENTITIES
+			.register("tile_entity_amethyst_crystal", () -> TileEntityType.Builder
+					.create(AmethystCrystalTileEntity::new, EvileDeferredRegistry.AMETHYST_CRYSTAL.get()).build(null));
+
+//=========ENTITIES====================================================================================================================
+	public static final RegistryObject<VampireBatEgg> VAMPIRE_BAT_EGG = ITEMS.register("vampire_bat_egg",
+			VampireBatEgg::new);
+
 //=========GENERATION==================================================================================================================
 
 	public static final RegistryObject<EvileOreFeature> AMETHYST_ORE_OVERWORLD_GEN = FEATURES
@@ -181,16 +210,19 @@ public class EvileRegistry {
 
 	public static void addOres() {
 		EvileOreGeneration.addOverworldOres();
-		EvileOreGeneration.addEndOres();
+		// EvileOreGeneration.addEndOres();
 		EvileOreGeneration.addNetherOres();
 	}
 
 //=========CONSTRUCTOR=================================================================================================================
 
-	public EvileRegistry() {
+	public EvileDeferredRegistry() {
 		Main.LOGGER.debug("Constructing EvileRegistry!");
 		Main.LOGGER.debug("Log Key 182727012020 : FMLJavaModLoadingContext = " + FMLJavaModLoadingContext.get());
 		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 }
