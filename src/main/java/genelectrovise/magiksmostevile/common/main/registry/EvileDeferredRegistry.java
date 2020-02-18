@@ -1,7 +1,5 @@
 package genelectrovise.magiksmostevile.common.main.registry;
 
-import java.util.function.Supplier;
-
 import genelectrovise.magiksmostevile.common.entity.vampire_bat.VampireBat;
 import genelectrovise.magiksmostevile.common.entity.vampire_bat.VampireBatEgg;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.AmethystArmorBase;
@@ -200,8 +198,9 @@ public class EvileDeferredRegistry {
 					.create(AmethystCrystalTileEntity::new, EvileDeferredRegistry.AMETHYST_CRYSTAL.get()).build(null));
 
 //=========ENTITIES====================================================================================================================
-	public static final RegistryObject<VampireBatEgg> VAMPIRE_BAT_EGG = ITEMS.register("vampire_bat_egg",
-			VampireBatEgg::new);
+	public static final RegistryObject<Item> VAMPIRE_BAT_EGG = ITEMS.register("vampire_bat_egg", VampireBatEgg::new);
+	public static final RegistryObject<EntityType<VampireBat>> VAMPIRE_BAT = ENTITIES.register("vampire_bat",
+			() -> EntityType.Builder.create(VampireBat::new, EntityClassification.MONSTER));
 
 //=========GENERATION==================================================================================================================
 
