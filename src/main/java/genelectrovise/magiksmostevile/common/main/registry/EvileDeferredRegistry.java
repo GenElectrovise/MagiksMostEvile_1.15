@@ -1,7 +1,5 @@
 package genelectrovise.magiksmostevile.common.main.registry;
 
-import genelectrovise.magiksmostevile.common.entity.vampire_bat.VampireBat;
-import genelectrovise.magiksmostevile.common.entity.vampire_bat.VampireBatEgg;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.AmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.OverPoweredAmethystArmorBase;
 import genelectrovise.magiksmostevile.common.item.equipment.armor.EvileArmorBases.PoweredAmethystArmorBase;
@@ -17,15 +15,16 @@ import genelectrovise.magiksmostevile.common.main.support.EnumEvileItemTier;
 import genelectrovise.magiksmostevile.common.main.support.EvileItemGroup;
 import genelectrovise.magiksmostevile.common.tileentity.amethyst_crystal.AmethystCrystalBlock;
 import genelectrovise.magiksmostevile.common.tileentity.amethyst_crystal.AmethystCrystalTileEntity;
+import genelectrovise.magiksmostevile.common.world.gen.EvileStructureGeneration;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeature;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreFeatureConfig;
 import genelectrovise.magiksmostevile.common.world.gen.ore.EvileOreGeneration;
+import genelectrovise.magiksmostevile.common.world.gen.shrine.ShrineFeature;
+import genelectrovise.magiksmostevile.common.world.gen.shrine.ShrineFeatureConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntityType.IFactory;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
@@ -198,19 +197,22 @@ public class EvileDeferredRegistry {
 					.create(AmethystCrystalTileEntity::new, EvileDeferredRegistry.AMETHYST_CRYSTAL.get()).build(null));
 
 //=========ENTITIES====================================================================================================================
-	public static final RegistryObject<Item> VAMPIRE_BAT_EGG = ITEMS.register("vampire_bat_egg", VampireBatEgg::new);
-	public static final RegistryObject<EntityType<VampireBat>> VAMPIRE_BAT = ENTITIES.register("vampire_bat",
-			() -> EntityType.Builder.create(VampireBat::new, EntityClassification.MONSTER));
+	
 
 //=========GENERATION==================================================================================================================
 
 	public static final RegistryObject<EvileOreFeature> AMETHYST_ORE_OVERWORLD_GEN = FEATURES
 			.register("amethyst_ore_overworld_gen", () -> new EvileOreFeature(EvileOreFeatureConfig::deserialize));
+	public static final RegistryObject<ShrineFeature> SHRINE_FEATURE = FEATURES.register("shrine_overworld_gen", () -> new ShrineFeature(ShrineFeatureConfig::deserialize));
 
 	public static void addOres() {
 		EvileOreGeneration.addOverworldOres();
 		// EvileOreGeneration.addEndOres();
 		EvileOreGeneration.addNetherOres();
+	}
+	
+	public static void addStructures() {
+		EvileStructureGeneration.addShrines();
 	}
 
 //=========CONSTRUCTOR=================================================================================================================

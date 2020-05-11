@@ -32,6 +32,7 @@ public class Main {
 	@SubscribeEvent
 	public static void FMLLoadCompleteEvent(FMLLoadCompleteEvent event) {
 		EvileDeferredRegistry.addOres();
+		EvileDeferredRegistry.addStructures();
 	}
 
 }

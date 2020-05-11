@@ -1,10 +1,6 @@
 package genelectrovise.magiksmostevile.common.world.gen.ore;
 
-import java.util.function.Predicate;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 
 public class EvileOreFeatureConfig extends OreFeatureConfig {
